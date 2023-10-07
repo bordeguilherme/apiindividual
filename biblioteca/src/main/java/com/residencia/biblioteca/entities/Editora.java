@@ -1,10 +1,13 @@
 package com.residencia.biblioteca.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +30,9 @@ public class Editora {
 	
 	@Column(name = "imagem_url")
 	private String imagem_url;
+	
+	@OneToMany(mappedBy = "editora")
+	private List<Livro> livros;
 
 	public Integer getCodigoEditora() {
 		return codigoEditora;
@@ -66,5 +72,13 @@ public class Editora {
 
 	public void setImagem_url(String imagem_url) {
 		this.imagem_url = imagem_url;
+	}
+
+	public List<Livro> getLivros() {
+		return livros;
+	}
+
+	public void setLivros(List<Livro> livros) {
+		this.livros = livros;
 	}
 }
