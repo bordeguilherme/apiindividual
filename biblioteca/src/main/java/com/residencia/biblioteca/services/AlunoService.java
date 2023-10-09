@@ -19,14 +19,21 @@ public class AlunoService {
 	
 	//recuperar um aluno pela sua chave primária
 	public Aluno buscarAlunoPorId(Integer id){
-		
+		return alunoRepo.findById(id).get();
 	}
 	
 	//salvar um novo aluno
-	
+	public Aluno salvarAluno(Aluno aluno) {
+		return alunoRepo.save(aluno);
+	}
 	
 	//atualizar um determinado aluno
-	
+	public Aluno atualizarAluno(Aluno aluno) {
+		return alunoRepo.save(aluno);
+	}
 	
 	//deletar um determinado aluno
+	public void deletarAluno(Aluno aluno) {
+		alunoRepo.delete(aluno);
+	}
 }
