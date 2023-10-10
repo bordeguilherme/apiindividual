@@ -19,7 +19,7 @@ public class AlunoService {
 	
 	//recuperar um aluno pela sua chave primária
 	public Aluno buscarAlunoPorId(Integer id){
-		return alunoRepo.findById(id).get();
+		return alunoRepo.findById(id).orElse(null);
 	}
 	
 	//salvar um novo aluno

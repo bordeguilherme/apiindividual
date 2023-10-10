@@ -19,7 +19,7 @@ public class LivroService {
 	
 	//recuperar um livro pela sua chave primária
 	public Livro buscarLivroPorId(Integer id){
-		return livroRepo.findById(id).get();
+		return livroRepo.findById(id).orElse(null);
 	}
 	
 	//salvar um novo livro

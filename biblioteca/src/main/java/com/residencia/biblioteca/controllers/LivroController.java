@@ -31,8 +31,14 @@ public class LivroController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Livro> buscarPorId(@PathVariable Integer id){
-		return new ResponseEntity<>
-			(livroService.buscarLivroPorId(id), HttpStatus.OK);
+		Livro livro = livroService.buscarLivroPorId(id);
+		if(livro == null) {
+			return new ResponseEntity<>
+				(livro, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>
+				(livroService.buscarLivroPorId(id), HttpStatus.OK);
+		}
 	}
 	
 	@GetMapping("/porid")
