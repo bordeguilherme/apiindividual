@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.residencia.biblioteca.entities.Editora;
 import com.residencia.biblioteca.services.EditoraService;
@@ -30,6 +31,12 @@ public class EditoraController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Editora> buscarPorId(@PathVariable Integer id){
+		return new ResponseEntity<>
+			(editoraService.buscarEditoraPorId(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("/porid")
+	public ResponseEntity<Editora> buscarEditoraPorId(@RequestParam Integer id){
 		return new ResponseEntity<>
 			(editoraService.buscarEditoraPorId(id), HttpStatus.OK);
 	}

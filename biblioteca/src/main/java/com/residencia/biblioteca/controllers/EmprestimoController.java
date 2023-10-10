@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.residencia.biblioteca.entities.Emprestimo;
 import com.residencia.biblioteca.services.EmprestimoService;
@@ -30,6 +31,12 @@ public class EmprestimoController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Emprestimo> buscarPorId(@PathVariable Integer id){
+		return new ResponseEntity<>
+			(emprestimoService.buscarEmprestimoPorId(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("/porid")
+	public ResponseEntity<Emprestimo> buscarEmprestimoPorId(@RequestParam Integer id){
 		return new ResponseEntity<>
 			(emprestimoService.buscarEmprestimoPorId(id), HttpStatus.OK);
 	}

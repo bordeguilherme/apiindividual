@@ -2,7 +2,6 @@ package com.residencia.biblioteca.entities;
 
 import java.util.Date;
 import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,7 +38,7 @@ public class Livro {
 		referencedColumnName = "codigoeditora")
 	private Editora editora;
 	
-	@OneToMany(mappedBy = "emprestimo")
+	@OneToMany(mappedBy = "livro")
 	private List<Emprestimo> emprestimos;
 
 	public Integer getCodigoLivro() {
