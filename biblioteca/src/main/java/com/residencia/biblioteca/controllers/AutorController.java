@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.residencia.biblioteca.entities.Autor;
 import com.residencia.biblioteca.services.AutorService;
@@ -41,18 +40,6 @@ public class AutorController {
 		}
 	}
 	
-	@GetMapping("/porid")
-	public ResponseEntity<Autor> buscarAutorPorId(@RequestParam Integer id){
-		Autor autor = autorService.buscarAutorPorId(id);
-		if(autor == null) {
-			return new ResponseEntity<>
-				(autor, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>
-				(autorService.buscarAutorPorId(id), HttpStatus.OK);
-		}
-	}
-	
 	@PostMapping
 	public ResponseEntity<Autor> salvar(@RequestBody Autor autor) {
 		return new ResponseEntity<>
@@ -67,9 +54,11 @@ public class AutorController {
 	
 	@DeleteMapping
 	public ResponseEntity<String> deletarAutor(@RequestBody Autor autor) {
-		autorService.deletarAutor(autor);
+		if(autorService.deletarAutor(autor))
 			return new ResponseEntity<>
-				("Deletado com Sucesso", HttpStatus.OK);
+				("{'msg':'Deletado com Sucesso'}", HttpStatus.OK);
+		else
+			return new ResponseEntity<>
+				("{'msg':'Não foi possível deletar'}", HttpStatus.BAD_REQUEST);
 	}
-	
 }

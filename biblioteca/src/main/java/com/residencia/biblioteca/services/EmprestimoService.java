@@ -33,7 +33,23 @@ public class EmprestimoService {
 	}
 	
 	//deletar um determinado emprestimo
-	public void deletarEmprestimo(Emprestimo emprestimo) {
+	public Boolean deletarEmprestimo(Emprestimo emprestimo) {
+		if(emprestimo == null)
+			return false;
+		
+		Emprestimo emprestimoExistente = buscarEmprestimoPorId(emprestimo.getCodigoEmprestimo());
+		
+		if(emprestimoExistente == null)
+			return false;
+		
 		emprestimoRepo.delete(emprestimo);
+		
+		Emprestimo emprestimoContinuaExistindo =
+				buscarEmprestimoPorId(emprestimo.getCodigoEmprestimo());
+		
+		if(emprestimoContinuaExistindo != null)
+			return false;
+		
+		return true;
 	}
 }

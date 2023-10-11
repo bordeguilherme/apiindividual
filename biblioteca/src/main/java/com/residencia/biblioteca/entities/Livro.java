@@ -2,10 +2,8 @@ package com.residencia.biblioteca.entities;
 
 import java.util.Date;
 import java.util.List;
-//import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-//import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,10 +14,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@JsonIdentityInfo (
-		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "codigoLivro"
-	)
+//@JsonIdentityInfo (
+//		generator = ObjectIdGenerators.PropertyGenerator.class,
+//		property = "codigoLivro"
+//	)
 @Entity
 @Table(name = "livro")
 public class Livro {
@@ -32,6 +30,7 @@ public class Livro {
 	@Column(name = "nomelivro")
 	private String nomeLivro;
 	
+	@JsonBackReference(value = "autor-livro-ref")
 	@ManyToOne
 	@JoinColumn(name = "codigoautor",
 		referencedColumnName = "codigoautor")
@@ -43,13 +42,13 @@ public class Livro {
 	@Column(name = "codigoisbn")
 	private Integer codigoIsbn;
 	
-//	@JsonBackReference(value = "editora-livro-ref")
+	@JsonBackReference(value = "editora-livro-ref")
 	@ManyToOne
 	@JoinColumn(name = "codigoeditora",
 		referencedColumnName = "codigoeditora")
 	private Editora editora;
 	
-//	@JsonManagedReference(value = "livro-emprestimo-ref")
+	@JsonManagedReference(value = "livro-emprestimo-ref")
 	@OneToMany(mappedBy = "livro")
 	private List<Emprestimo> emprestimos;
 

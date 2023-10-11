@@ -33,7 +33,23 @@ public class EditoraService {
 	}
 	
 	//deletar uma determinada editora
-	public void deletarEditora(Editora editora) {
+	public Boolean deletarEditora(Editora editora) {
+		if(editora == null)
+			return false;
+		
+		Editora editoraExistente = buscarEditoraPorId(editora.getCodigoEditora());
+		
+		if(editoraExistente == null)
+			return false;
+		
 		editoraRepo.delete(editora);
+		
+		Editora editoraContinuaExistindo =
+				buscarEditoraPorId(editora.getCodigoEditora());
+		
+		if(editoraContinuaExistindo != null)
+			return false;
+		
+		return true;
 	}
 }

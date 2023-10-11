@@ -1,8 +1,11 @@
 package com.residencia.biblioteca.entities;
 
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+//import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+//import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,10 +14,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@JsonIdentityInfo (
-		generator = ObjectIdGenerators.PropertyGenerator.class,
-		property = "codigoAutor"
-	)
+//@JsonIdentityInfo (
+//		generator = ObjectIdGenerators.PropertyGenerator.class,
+//		property = "codigoAutor"
+//	)
 @Entity
 @Table(name = "autor")
 public class Autor {
@@ -27,6 +30,7 @@ public class Autor {
 	@Column(name = "nomeautor")
 	private String nomeAutor;
 	
+	@JsonManagedReference(value = "autor-livro-ref")
 	@OneToMany(mappedBy = "autor")
 	private List<Livro> livros;
 

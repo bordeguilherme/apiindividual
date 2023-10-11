@@ -33,7 +33,23 @@ public class LivroService {
 	}
 	
 	//deletar um determinado livro
-	public void deletarLivro(Livro livro) {
+	public Boolean deletarLivro(Livro livro) {
+		if(livro == null)
+			return false;
+		
+		Livro livroExistente = buscarLivroPorId(livro.getCodigoLivro());
+		
+		if(livroExistente == null)
+			return false;
+		
 		livroRepo.delete(livro);
+		
+		Livro livroContinuaExistindo =
+				buscarLivroPorId(livro.getCodigoLivro());
+		
+		if(livroContinuaExistindo != null)
+			return false;
+		
+		return true;
 	}
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.residencia.biblioteca.entities.Livro;
 import com.residencia.biblioteca.services.LivroService;
@@ -41,12 +40,6 @@ public class LivroController {
 		}
 	}
 	
-	@GetMapping("/porid")
-	public ResponseEntity<Livro> buscarLivroPorId(@RequestParam Integer id){
-		return new ResponseEntity<>
-			(livroService.buscarLivroPorId(id), HttpStatus.OK);
-	}
-	
 	@PostMapping
 	public ResponseEntity<Livro> salvar(@RequestBody Livro livro) {
 		return new ResponseEntity<>
@@ -61,8 +54,11 @@ public class LivroController {
 	
 	@DeleteMapping
 	public ResponseEntity<String> deletarLivro(@RequestBody Livro livro) {
-		livroService.deletarLivro(livro);
+		if(livroService.deletarLivro(livro))
 			return new ResponseEntity<>
-				("Deletado com Sucesso", HttpStatus.OK);
+				("{'msg':'Deletado com Sucesso'}", HttpStatus.OK);
+		else
+			return new ResponseEntity<>
+				("{'msg':'Não foi possível deletar'}", HttpStatus.BAD_REQUEST);
 	}
 }

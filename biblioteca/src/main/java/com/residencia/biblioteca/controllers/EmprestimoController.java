@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.residencia.biblioteca.entities.Emprestimo;
 import com.residencia.biblioteca.services.EmprestimoService;
@@ -41,12 +40,6 @@ public class EmprestimoController {
 		}
 	}
 	
-	@GetMapping("/porid")
-	public ResponseEntity<Emprestimo> buscarEmprestimoPorId(@RequestParam Integer id){
-		return new ResponseEntity<>
-			(emprestimoService.buscarEmprestimoPorId(id), HttpStatus.OK);
-	}
-	
 	@PostMapping
 	public ResponseEntity<Emprestimo> salvar(@RequestBody Emprestimo emprestimo) {
 		return new ResponseEntity<>
@@ -61,8 +54,11 @@ public class EmprestimoController {
 	
 	@DeleteMapping
 	public ResponseEntity<String> deletarEmprestimo(@RequestBody Emprestimo emprestimo) {
-		emprestimoService.deletarEmprestimo(emprestimo);
+		if(emprestimoService.deletarEmprestimo(emprestimo))
 			return new ResponseEntity<>
-				("Deletado com Sucesso", HttpStatus.OK);
+				("{'msg':'Deletado com Sucesso'}", HttpStatus.OK);
+		else
+			return new ResponseEntity<>
+				("{'msg':'Não foi possível deletar'}", HttpStatus.BAD_REQUEST);
 	}
 }

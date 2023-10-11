@@ -33,7 +33,23 @@ public class AutorService {
 	}
 	
 	//deletar um determinado autor
-	public void deletarAutor(Autor autor) {
+	public Boolean deletarAutor(Autor autor) {
+		if(autor == null)
+			return false;
+		
+		Autor autorExistente = buscarAutorPorId(autor.getCodigoAutor());
+		
+		if(autorExistente == null)
+			return false;
+		
 		autorRepo.delete(autor);
+		
+		Autor autorContinuaExistindo =
+				buscarAutorPorId(autor.getCodigoAutor());
+		
+		if(autorContinuaExistindo != null)
+			return false;
+		
+		return true;
 	}
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.residencia.biblioteca.entities.Aluno;
 import com.residencia.biblioteca.services.AlunoService;
@@ -40,11 +39,6 @@ public class AlunoController {
 				(alunoService.buscarAlunoPorId(id), HttpStatus.OK);
 		}
 	}
-	@GetMapping("/porid")
-	public ResponseEntity<Aluno> buscarAlunoPorId(@RequestParam Integer id){
-		return new ResponseEntity<>
-			(alunoService.buscarAlunoPorId(id), HttpStatus.OK);
-	}
 	
 	@PostMapping
 	public ResponseEntity<Aluno> salvar(@RequestBody Aluno aluno) {
@@ -60,8 +54,11 @@ public class AlunoController {
 	
 	@DeleteMapping
 	public ResponseEntity<String> deletarAluno(@RequestBody Aluno aluno) {
-		alunoService.deletarAluno(aluno);
+		if(alunoService.deletarAluno(aluno))
 			return new ResponseEntity<>
 				("Deletado com Sucesso", HttpStatus.OK);
+		else
+			return new ResponseEntity<>
+				("Não foi possível deletar", HttpStatus.BAD_REQUEST);
 	}
 }
