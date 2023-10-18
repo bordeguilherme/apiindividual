@@ -1,8 +1,12 @@
 package com.residencia.biblioteca.services;
 
 import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.residencia.biblioteca.dto.EditoraResumidoDTO;
 import com.residencia.biblioteca.entities.Editora;
 import com.residencia.biblioteca.repositories.EditoraRepository;
 
@@ -11,6 +15,8 @@ public class EditoraService {
 	
 	@Autowired
 	EditoraRepository editoraRepo;
+	
+	private ModelMapper modelMapper = new ModelMapper();
 	
 	//recuperar todas as editoras
 	public List<Editora> listarEditoras(){
@@ -27,8 +33,26 @@ public class EditoraService {
 		return editoraRepo.save(editora);
 	}
 	
+	//convertento entidade para dto
+	public EditoraResumidoDTO convertToDto(Editora editora) {
+		EditoraResumidoDTO editoraDto = modelMapper.map(editora, EditoraResumidoDTO.class);
+		return editoraDto;
+	}
+	
+	//convertendo dto para entidade
+	public Editora convertToEntity(EditoraResumidoDTO editoraDto) {
+		Editora editora = modelMapper.map(editoraDto, Editora.class);
+		return editora;
+	}
+	
+	//salvar uma nova editora DTO
+	public EditoraResumidoDTO salvarEditoraDto(EditoraResumidoDTO editoraDTO) {
+		Editora editora = convertToEntity(editoraDTO);
+		return convertToDto (editoraRepo.save(editora));
+	}
+	
 	//atualizar uma determinada editora
-	public Editora atualizarEditora(Editora editora) {
+	public Editora atualizarEditora(Editora editora) {	
 		return editoraRepo.save(editora);
 	}
 	

@@ -1,8 +1,12 @@
 package com.residencia.biblioteca.services;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.residencia.biblioteca.dto.AlunoResumidoDTO;
 import com.residencia.biblioteca.entities.Aluno;
 import com.residencia.biblioteca.repositories.AlunoRepository;
 
@@ -17,9 +21,42 @@ public class AlunoService {
 		return alunoRepo.findAll();
 	}
 	
+	//recuperar todos os alunos RESUMIDOS
+	public List<AlunoResumidoDTO> listarAlunosResumidos() {
+		
+	    List<Aluno> alunos = alunoRepo.findAll();
+	    List<AlunoResumidoDTO> alunosDTO = new ArrayList<>();
+
+	    for (Aluno aluno : alunos) {
+	        AlunoResumidoDTO alunoResDTO = new AlunoResumidoDTO();
+	        alunoResDTO.setNumeroMatriculaAluno(aluno.getNumeroMatriculaAluno());
+	        alunoResDTO.setNome(aluno.getNome());
+	        alunoResDTO.setCpf(aluno.getCpf());
+	        alunosDTO.add(alunoResDTO);
+	    }
+
+	    return alunosDTO;
+	}
+	
 	//recuperar um aluno pela sua chave primária
 	public Aluno buscarAlunoPorId(Integer id){
 		return alunoRepo.findById(id).orElse(null);
+	}
+	
+	//recuperar um aluno RESUMIDO pela sua chave primária
+	public AlunoResumidoDTO getAlunoResumidoPorId(Integer id){
+		
+		Aluno aluno =  alunoRepo.findById(id).orElse(null);
+		
+		if(aluno != null) {
+		AlunoResumidoDTO alunoResDTO = new AlunoResumidoDTO(
+				 aluno.getNumeroMatriculaAluno(),
+				 aluno.getNome(),
+				 aluno.getCpf()
+				 );
+		return alunoResDTO;
+		}	
+		return null;
 	}
 	
 	//salvar um novo aluno

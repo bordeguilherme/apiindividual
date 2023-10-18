@@ -1,6 +1,7 @@
 package com.residencia.biblioteca.controllers;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.residencia.biblioteca.dto.AlunoResumidoDTO;
 import com.residencia.biblioteca.entities.Aluno;
 import com.residencia.biblioteca.services.AlunoService;
 
@@ -28,6 +31,12 @@ public class AlunoController {
 			(alunoService.listarAlunos(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/resumido")
+	public ResponseEntity<List<AlunoResumidoDTO>> listarAlunosResumidos() {
+	    List<AlunoResumidoDTO> alunosDTO = alunoService.listarAlunosResumidos();
+	        return new ResponseEntity<>(alunosDTO, HttpStatus.OK);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Aluno> buscarPorId(@PathVariable Integer id){
 		Aluno aluno = alunoService.buscarAlunoPorId(id);
@@ -37,6 +46,18 @@ public class AlunoController {
 		} else {
 			return new ResponseEntity<>
 				(alunoService.buscarAlunoPorId(id), HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/resumido/{id}")
+	public ResponseEntity<AlunoResumidoDTO> getAlunoResumidoPorId(@PathVariable Integer id){
+		AlunoResumidoDTO alunoResDTO = alunoService.getAlunoResumidoPorId(id);
+		if(alunoResDTO == null) {
+			return new ResponseEntity<>
+				(alunoResDTO, HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>
+				(alunoService.getAlunoResumidoPorId(id), HttpStatus.OK);
 		}
 	}
 	
