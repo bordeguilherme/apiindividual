@@ -107,4 +107,12 @@ public class Livro {
 	public void setEmprestimos(List<Emprestimo> emprestimos) {
 		this.emprestimos = emprestimos;
 	}
+
+	@Override
+	public String toString() {
+		return "Livro [codigoLivro=" + codigoLivro + ", nomeLivro=" + nomeLivro + ", autor=" + autor
+				+ ", dataLancamento=" + dataLancamento + ", codigoIsbn=" + codigoIsbn + ", editora=" + editora
+				+ ", emprestimos=" + emprestimos + "]";
+	}
+	
 }
